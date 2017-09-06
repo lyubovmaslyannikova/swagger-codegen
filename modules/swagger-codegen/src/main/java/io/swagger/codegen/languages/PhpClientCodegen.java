@@ -38,7 +38,7 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
     protected String invokerPackage = "Swagger\\Client";
     protected String composerVendorName = null;
     protected String composerProjectName = null;
-    protected String packagePath = "SwaggerClient-php";
+    protected String packagePath = "";
     protected String artifactVersion = null;
     protected String srcBasePath = "lib";
     protected String testBasePath = "test";
@@ -300,10 +300,11 @@ public class PhpClientCodegen extends DefaultCodegen implements CodegenConfig {
         // make test path available in mustache template
         additionalProperties.put("testBasePath", testBasePath);
 
+        supportingFiles.add(new SupportingFile("ApiClient.mustache", toPackagePath(invokerPackage, srcBasePath + "/" + apiDirName), "ApiClient.php"));
+        supportingFiles.add(new SupportingFile("ObjectSerializer.mustache", toPackagePath(invokerPackage, srcBasePath + "/" + apiDirName), "ObjectSerializer.php"));
+
         supportingFiles.add(new SupportingFile("ApiException.mustache", toPackagePath(invokerPackage, srcBasePath), "ApiException.php"));
         supportingFiles.add(new SupportingFile("Configuration.mustache", toPackagePath(invokerPackage, srcBasePath), "Configuration.php"));
-        supportingFiles.add(new SupportingFile("ObjectSerializer.mustache", toPackagePath(invokerPackage, srcBasePath), "ObjectSerializer.php"));
-        supportingFiles.add(new SupportingFile("ModelInterface.mustache", toPackagePath(modelPackage, srcBasePath), "ModelInterface.php"));
         supportingFiles.add(new SupportingFile("HeaderSelector.mustache", toPackagePath(invokerPackage, srcBasePath), "HeaderSelector.php"));
         supportingFiles.add(new SupportingFile("composer.mustache", getPackagePath(), "composer.json"));
         supportingFiles.add(new SupportingFile("README.mustache", getPackagePath(), "README.md"));
